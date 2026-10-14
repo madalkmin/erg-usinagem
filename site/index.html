@@ -1,0 +1,453 @@
+<!doctype html>
+<html lang="pt-BR" data-theme="escuro">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ERG Usinagem de Precisão</title>
+<meta property="og:image" content="assets/erg-logo.png">
+<link rel="icon" href="assets/favicon-64.png" type="image/png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<meta name="description" content="Usinagem CNC, ferramentaria e peças sob desenho para a indústria. Do protótipo à série, com inspeção dimensional em cada lote.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="premium.css">
+<script>
+  // aplica a variante antes do primeiro paint (evita flash)
+  (function () {
+    var p = new URLSearchParams(location.search).get('v');
+    var v = p === 'claro' || p === 'escuro' ? p : null;
+    try { v = v || localStorage.getItem('erg-variante'); } catch (e) {}
+    if (v) document.documentElement.setAttribute('data-theme', v);
+  })();
+</script>
+</head>
+<body>
+
+<!-- Faixa de status -->
+<div class="statusbar">
+  <div class="wrap statusbar__in">
+    <span class="status-live"><i></i>Produção ativa</span>
+    <span class="mono" id="clock">--:--:--</span>
+    <span class="hide-sm">Tolerância padrão ±0,01 mm</span>
+    <span class="hide-sm">Orçamento em até 24 h úteis</span>
+    <a href="tel:+550000000000" class="statusbar__tel mono">(00) 0000-0000</a>
+  </div>
+</div>
+
+<!-- Navegação -->
+<header class="nav" id="nav">
+  <div class="wrap nav__in">
+    <a href="#topo" class="brand" aria-label="ERG Usinagem de Precisão">
+      <img class="brand__logo logo-on-dark" src="assets/erg-logo-menu.webp" alt="ERG Usinagem de Precisão" width="1280" height="522" decoding="async"><img class="brand__logo logo-on-light" src="assets/erg-logo-menu-grafite.webp" alt="" aria-hidden="true" width="1280" height="522" decoding="async">
+    </a>
+    <nav class="nav__links" aria-label="Principal">
+      <a href="#capacidades">Capacidades</a>
+      <a href="#processo">Processo</a>
+      <a href="#materiais">Materiais</a>
+      <a href="#qualidade">Qualidade</a>
+    </nav>
+    <a href="#orcamento" class="btn btn--sm">Solicitar orçamento</a>
+  </div>
+</header>
+
+<aside class="rail" aria-hidden="true">
+  <span class="rail__n mono" id="railN">01</span>
+  <span class="rail__track"><i id="railBar"></i></span>
+  <span class="rail__t mono" id="railT">Início</span>
+</aside>
+
+<main id="topo">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="wrap hero__grid">
+      <div class="hero__copy">
+        <p class="eyebrow"><span class="mono">01</span> Usinagem CNC · Ferramentaria · Peças sob desenho</p>
+        <h1 class="hero__title">
+          <span class="line"><span class="metal sheen">Precisão que</span></span>
+          <span class="line"><span class="metal sheen">se mede em</span></span>
+          <span class="line"><span class="accent-word">mícrons.</span></span>
+        </h1>
+        <p class="hero__lead">Fabricamos peças técnicas, moldes, matrizes e dispositivos a partir do seu desenho. Do protótipo à série, com relatório dimensional em cada lote.</p>
+        <div class="hero__cta">
+          <a href="#orcamento" class="btn">Enviar desenho para orçamento <span class="btn__arrow">→</span></a>
+          <a href="#capacidades" class="btn btn--ghost">Ver capacidades</a>
+        </div>
+        <dl class="hero__meta">
+          <div><dt>Formatos aceitos</dt><dd class="mono">STEP · IGES · DWG · DXF · PDF</dd></div>
+          <div><dt>Lote</dt><dd class="mono">1 – 10.000 pç</dd></div>
+        </dl>
+      </div>
+
+      <figure class="drawing" id="drawing" aria-label="Simulação de percurso de ferramenta CNC sobre desenho técnico">
+        <div class="drawing__head mono">
+          <span>PROG O0427 · FLANGE-A</span>
+          <span id="pass">PASSE 1/6</span>
+        </div>
+        <svg viewBox="0 0 600 480" class="drawing__svg" id="drawingSvg">
+          <defs>
+            <pattern id="g-minor" width="20" height="20" patternUnits="userSpaceOnUse">
+              <path d="M20 0H0V20" fill="none" class="grid-minor"/>
+            </pattern>
+            <pattern id="g-major" width="100" height="100" patternUnits="userSpaceOnUse">
+              <rect width="100" height="100" fill="url(#g-minor)"/>
+              <path d="M100 0H0V100" fill="none" class="grid-major"/>
+            </pattern>
+            <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+              <path d="M0 1 L10 5 L0 9 z" class="arrowhead"/>
+            </marker>
+          </defs>
+          <rect width="600" height="480" fill="url(#g-major)"/>
+
+          <!-- peça -->
+          <g class="part">
+            <rect x="80" y="80" width="440" height="320" rx="24"/>
+            <circle cx="300" cy="240" r="70"/>
+            <circle cx="300" cy="240" r="86" class="part__thin"/>
+            <circle cx="124" cy="124" r="12"/><circle cx="476" cy="124" r="12"/>
+            <circle cx="124" cy="356" r="12"/><circle cx="476" cy="356" r="12"/>
+            <path d="M300 140 V150 M300 330 V340 M200 240 H210 M390 240 H400" class="part__thin"/>
+          </g>
+          <!-- linhas de centro -->
+          <g class="center">
+            <path d="M300 60 V420 M60 240 H540"/>
+            <path d="M104 124 H144 M124 104 V144 M456 124 H496 M476 104 V144 M104 356 H144 M124 336 V376 M456 356 H496 M476 336 V376"/>
+          </g>
+          <!-- cotas -->
+          <g class="dim">
+            <path d="M80 70 V40 M520 70 V40"/>
+            <path d="M84 50 H516" marker-start="url(#arr)" marker-end="url(#arr)"/>
+            <text x="300" y="44" text-anchor="middle">110,00</text>
+            <path d="M70 80 H40 M70 400 H40"/>
+            <path d="M50 84 V396" marker-start="url(#arr)" marker-end="url(#arr)"/>
+            <text x="44" y="240" text-anchor="middle" transform="rotate(-90 44 240)">80,00</text>
+            <path d="M350 190 L430 110 H520"/>
+            <text x="436" y="104">Ø35,000 H7</text>
+            <path d="M476 356 L540 430 H580" />
+            <text x="512" y="448">4× Ø6,00</text>
+            <text x="92" y="438" class="dim__note">Ra 0,8 · ±0,01 salvo indicação</text>
+          </g>
+          <!-- percurso -->
+          <path id="toolpathGhost" class="toolpath-ghost"/>
+          <path id="toolpath" class="toolpath"/>
+          <!-- ferramenta -->
+          <g id="tool" class="tool">
+            <circle r="9" class="tool__body"/>
+            <circle r="2.5" class="tool__core"/>
+          </g>
+          <!-- mira do cursor -->
+          <g id="cross" class="cross">
+            <path id="crossH" d="M0 0H600"/>
+            <path id="crossV" d="M0 0V480"/>
+            <text id="crossT" x="0" y="0"></text>
+          </g>
+        </svg>
+        <div class="readout mono" aria-hidden="true">
+          <div class="readout__axes">
+            <div><span>X</span><b id="rx">0.000</b></div>
+            <div><span>Y</span><b id="ry">0.000</b></div>
+            <div><span>Z</span><b id="rz">-0.500</b></div>
+          </div>
+          <div class="readout__params">
+            <div><span>F</span><b>1800</b></div>
+            <div><span>S</span><b id="rs">12000</b></div>
+            <div><span>T</span><b>03 Ø6</b></div>
+          </div>
+          <ol class="readout__log" id="glog"></ol>
+        </div>
+      </figure>
+    </div>
+
+    <!-- faixa de especificação -->
+    <div class="wrap">
+      <div class="ruler" id="ruler" aria-hidden="true"><span class="ruler__mark" id="rulerMark"><b class="mono" id="rulerVal">0,0</b></span></div>
+      <ul class="specs">
+        <li><b class="specs__n"><span data-count="0.005" data-dec="3">0,000</span><small>mm</small></b><span>Tolerância alcançável em cotas críticas</span></li>
+        <li><b class="specs__n"><span data-count="0.4" data-dec="1">0,0</span><small>µm Ra</small></b><span>Acabamento superficial em retífica</span></li>
+        <li><b class="specs__n"><span data-count="5" data-dec="0">0</span><small>eixos</small></b><span>Fresamento simultâneo para geometrias complexas</span></li>
+        <li><b class="specs__n"><span data-count="48" data-dec="0">0</span><small>h</small></b><span>Prazo para protótipos de baixa complexidade</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ESCALA -->
+  <section class="scale" id="escala">
+    <div class="wrap scale__grid">
+      <div class="scale__copy reveal">
+        <p class="eyebrow"><span class="mono">Ø</span> Ordem de grandeza</p>
+        <p class="scale__num"><span class="metal">5</span><small>µm</small></p>
+        <h2 class="sec-title">Catorze vezes mais fino que um fio de cabelo.</h2>
+        <p class="sec-lead">Um fio de cabelo tem cerca de 70 µm. A faixa de tolerância das nossas cotas críticas cabe catorze vezes dentro dele. É nesse intervalo que a sua peça encaixa, veda e gira sem folga.</p>
+      </div>
+      <figure class="scale__fig reveal" id="scaleFig" aria-label="Comparação entre o diâmetro de um fio de cabelo e a faixa de tolerância de 5 micrômetros">
+        <svg viewBox="0 0 520 520">
+          <defs>
+            <pattern id="hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><path d="M0 0V6" class="hatch"/></pattern>
+          </defs>
+          <circle cx="260" cy="260" r="245" class="sf-ring"/>
+          <g class="sf-ticks" id="sfTicks"></g>
+          <circle cx="260" cy="260" r="180" class="sf-hair" pathLength="1"/>
+          <circle cx="260" cy="260" r="180" class="sf-hair-fill"/>
+          <rect x="247" y="80" width="26" height="360" class="sf-band"/>
+          <path d="M80 260H440" class="sf-dim" marker-start="url(#arr)" marker-end="url(#arr)"/>
+          <text x="260" y="250" text-anchor="middle" class="sf-label">Ø 70 µm</text>
+          <path d="M273 120 H360 L392 96" class="sf-lead"/>
+          <text x="398" y="92" class="sf-label sf-label--accent">5 µm</text>
+          <text x="260" y="476" text-anchor="middle" class="sf-cap mono">ESCALA 7,2 : 1 000 000 · CORTE A-A</text>
+        </svg>
+      </figure>
+    </div>
+  </section>
+
+  <!-- CAPACIDADES -->
+  <section class="section" id="capacidades">
+    <div class="wrap">
+      <header class="sec-head reveal">
+        <p class="eyebrow"><span class="mono">02</span> Capacidades</p>
+        <h2 class="sec-title">Um parque de máquinas pensado para a peça difícil.</h2>
+        <p class="sec-lead">Cada processo com faixa de trabalho declarada. Se a sua peça cabe aqui, a gente faz.</p>
+      </header>
+
+      <div class="caps">
+        <article class="cap reveal">
+          <span class="cap__n mono">2.1</span>
+          <svg class="cap__ic" viewBox="0 0 64 48" aria-hidden="true"><path d="M2 24h60" class="ax"/><rect x="3" y="9" width="11" height="30"/><path d="M14 15h4v18h-4"/><rect x="18" y="18" width="30" height="12"/><path d="M41 30l6 9H35z"/></svg>
+          <h3 class="cap__t">Torneamento CNC</h3>
+          <p class="cap__d">Eixos, buchas, pinos e peças de revolução com ferramenta acionada para furos e fresados radiais.</p>
+          <dl class="cap__s mono"><div><dt>Ø máx.</dt><dd>350 mm</dd></div><div><dt>Compr.</dt><dd>600 mm</dd></div><div><dt>Tol.</dt><dd>±0,005</dd></div></dl>
+          <span class="cap__go" aria-hidden="true">→</span>
+        </article>
+        <article class="cap reveal">
+          <span class="cap__n mono">2.2</span>
+          <svg class="cap__ic" viewBox="0 0 64 48" aria-hidden="true"><path d="M5 44V30h17v6h20v-6h17v14z"/><rect x="27" y="2" width="10" height="11"/><path d="M28 13h8v18h-8zM28 17l8 4M28 23l8 4"/></svg>
+          <h3 class="cap__t">Fresamento 3, 4 e 5 eixos</h3>
+          <p class="cap__d">Blocos, carcaças, cavidades e superfícies complexas em uma única fixação, reduzindo erro acumulado.</p>
+          <dl class="cap__s mono"><div><dt>Curso</dt><dd>1020×560×510</dd></div><div><dt>Rot.</dt><dd>12.000 rpm</dd></div><div><dt>Tol.</dt><dd>±0,01</dd></div></dl>
+          <span class="cap__go" aria-hidden="true">→</span>
+        </article>
+        <article class="cap reveal">
+          <span class="cap__n mono">2.3</span>
+          <svg class="cap__ic" viewBox="0 0 64 48" aria-hidden="true"><circle cx="32" cy="15" r="12"/><circle cx="32" cy="15" r="3"/><rect x="4" y="31" width="56" height="10"/><path d="M45 27l9-5M47 30l11-1"/></svg>
+          <h3 class="cap__t">Retífica plana e cilíndrica</h3>
+          <p class="cap__d">Acabamento final em peças temperadas, guias, punções e superfícies de vedação.</p>
+          <dl class="cap__s mono"><div><dt>Mesa</dt><dd>600×300</dd></div><div><dt>Ra</dt><dd>0,4 µm</dd></div><div><dt>Plan.</dt><dd>0,003</dd></div></dl>
+          <span class="cap__go" aria-hidden="true">→</span>
+        </article>
+        <article class="cap reveal">
+          <span class="cap__n mono">2.4</span>
+          <svg class="cap__ic" viewBox="0 0 64 48" aria-hidden="true"><rect x="24" y="2" width="16" height="6"/><rect x="24" y="40" width="16" height="6"/><path d="M32 8v32" class="ax"/><path d="M4 19h20l5 5-5 5H4M60 19H40l-5 5 5 5h20"/></svg>
+          <h3 class="cap__t">Eletroerosão a fio e penetração</h3>
+          <p class="cap__d">Perfis internos, cantos vivos e cavidades em material endurecido que a fresa não alcança.</p>
+          <dl class="cap__s mono"><div><dt>Altura</dt><dd>200 mm</dd></div><div><dt>Fio</dt><dd>Ø0,25</dd></div><div><dt>Tol.</dt><dd>±0,005</dd></div></dl>
+          <span class="cap__go" aria-hidden="true">→</span>
+        </article>
+        <article class="cap reveal">
+          <span class="cap__n mono">2.5</span>
+          <svg class="cap__ic" viewBox="0 0 64 48" aria-hidden="true"><path d="M5 5h54v16H39l-7-6-7 6H5zM5 43h54V27H39l-7 6-7-6H5z"/><path d="M11 9v30M53 9v30" class="ax"/></svg>
+          <h3 class="cap__t">Ferramentaria</h3>
+          <p class="cap__d">Moldes, matrizes de corte e repuxo, gabaritos e dispositivos de fixação e controle.</p>
+          <dl class="cap__s mono"><div><dt>Projeto</dt><dd>CAD/CAM</dd></div><div><dt>Tryout</dt><dd>Incluso</dd></div><div><dt>Manut.</dt><dd>Sim</dd></div></dl>
+          <span class="cap__go" aria-hidden="true">→</span>
+        </article>
+        <article class="cap reveal">
+          <span class="cap__n mono">2.6</span>
+          <svg class="cap__ic" viewBox="0 0 64 48" aria-hidden="true"><path d="M3 8h58v7H3zM9 15v22l6 6V15M41 15v22l-6 6V15"/><path d="M21 8v3M27 8v4M33 8v3M39 8v4M45 8v3M51 8v4"/></svg>
+          <h3 class="cap__t">Engenharia reversa</h3>
+          <p class="cap__d">Sem desenho? Medimos a peça original, modelamos em 3D e fabricamos a reposição.</p>
+          <dl class="cap__s mono"><div><dt>Entrada</dt><dd>Amostra</dd></div><div><dt>Saída</dt><dd>STEP + peça</dd></div><div><dt>Prazo</dt><dd>sob consulta</dd></div></dl>
+          <span class="cap__go" aria-hidden="true">→</span>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROCESSO -->
+  <section class="section section--alt" id="processo">
+    <div class="wrap">
+      <header class="sec-head reveal">
+        <p class="eyebrow"><span class="mono">03</span> Processo</p>
+        <h2 class="sec-title">Do arquivo à peça na sua bancada.</h2>
+      </header>
+      <ol class="flow" id="flow">
+        <li class="flow__step reveal">
+          <span class="flow__k mono">ETAPA 01</span>
+          <h3>Desenho</h3>
+          <p>Você envia o arquivo 3D, o desenho 2D ou a própria peça. Assinamos NDA quando necessário.</p>
+          <span class="flow__t mono">D+0</span>
+        </li>
+        <li class="flow__step reveal">
+          <span class="flow__k mono">ETAPA 02</span>
+          <h3>Análise e orçamento</h3>
+          <p>Revisamos tolerâncias, material e fabricabilidade. Sugerimos ajustes que reduzem custo sem perder função.</p>
+          <span class="flow__t mono">D+1</span>
+        </li>
+        <li class="flow__step reveal">
+          <span class="flow__k mono">ETAPA 03</span>
+          <h3>Programação CAM</h3>
+          <p>Estratégia de usinagem, ferramental e fixação definidos antes do primeiro cavaco.</p>
+          <span class="flow__t mono">D+2</span>
+        </li>
+        <li class="flow__step reveal">
+          <span class="flow__k mono">ETAPA 04</span>
+          <h3>Usinagem</h3>
+          <p>Primeira peça aprovada em inspeção antes de liberar o lote completo.</p>
+          <span class="flow__t mono">D+3…</span>
+        </li>
+        <li class="flow__step reveal">
+          <span class="flow__k mono">ETAPA 05</span>
+          <h3>Inspeção e entrega</h3>
+          <p>Relatório dimensional, certificado de material e embalagem que protege a cota.</p>
+          <span class="flow__t mono">Entrega</span>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- MATERIAIS -->
+  <section class="section" id="materiais">
+    <div class="wrap">
+      <header class="sec-head sec-head--split reveal">
+        <div>
+          <p class="eyebrow"><span class="mono">04</span> Materiais</p>
+          <h2 class="sec-title">Do alumínio ao aço temperado.</h2>
+        </div>
+        <p class="sec-lead">Trabalhamos com material fornecido pelo cliente ou compramos com certificado de usina e rastreabilidade por lote.</p>
+      </header>
+      <div class="mats reveal">
+        <div class="mat"><span class="mat__c mono">1045</span><b>Aço carbono</b><small>Uso geral · 170–210 HB</small></div>
+        <div class="mat"><span class="mat__c mono">4140</span><b>Aço Cr-Mo</b><small>Beneficiado · 28–32 HRC</small></div>
+        <div class="mat"><span class="mat__c mono">H13</span><b>Aço ferramenta</b><small>Moldes · até 52 HRC</small></div>
+        <div class="mat"><span class="mat__c mono">D2</span><b>VC131 / D2</b><small>Matrizes · até 60 HRC</small></div>
+        <div class="mat"><span class="mat__c mono">304</span><b>Inox austenítico</b><small>Alimentício · 304 / 316L</small></div>
+        <div class="mat"><span class="mat__c mono">420</span><b>Inox martensítico</b><small>Temperável · 48–52 HRC</small></div>
+        <div class="mat"><span class="mat__c mono">6061</span><b>Alumínio</b><small>Estrutural · T6</small></div>
+        <div class="mat"><span class="mat__c mono">7075</span><b>Alumínio aeronáutico</b><small>Alta resistência · T651</small></div>
+        <div class="mat"><span class="mat__c mono">C360</span><b>Latão</b><small>Conexões · alta usinabilidade</small></div>
+        <div class="mat"><span class="mat__c mono">TM23</span><b>Bronze</b><small>Buchas e mancais</small></div>
+        <div class="mat"><span class="mat__c mono">Ti-6</span><b>Titânio Gr. 5</b><small>Médico e aeroespacial</small></div>
+        <div class="mat"><span class="mat__c mono">PEEK</span><b>Polímeros técnicos</b><small>PEEK · POM · Nylon · UHMW</small></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- QUALIDADE -->
+  <section class="section section--alt" id="qualidade">
+    <div class="wrap qa">
+      <div class="qa__copy reveal">
+        <p class="eyebrow"><span class="mono">05</span> Qualidade</p>
+        <h2 class="sec-title">Peça boa é peça medida.</h2>
+        <p class="sec-lead">Cada lote sai com relatório dimensional das cotas críticas. Você recebe os números, não uma promessa.</p>
+        <ul class="qa__list">
+          <li><span class="mono">01</span>Inspeção de primeira peça antes da série</li>
+          <li><span class="mono">02</span>Instrumentos calibrados com rastreabilidade RBC</li>
+          <li><span class="mono">03</span>Rugosímetro, projetor de perfil e altímetro digital</li>
+          <li><span class="mono">04</span>Certificado de material sob solicitação</li>
+        </ul>
+      </div>
+
+      <div class="report reveal" id="report">
+        <div class="report__head">
+          <div>
+            <span class="mono report__k">RELATÓRIO DIMENSIONAL</span>
+            <b>Flange-A · Lote 0427</b>
+          </div>
+          <span class="report__stamp mono">APROVADO</span>
+        </div>
+        <table class="report__tbl mono">
+          <thead><tr><th>Cota</th><th>Nominal</th><th>Tol.</th><th>Medido</th><th></th></tr></thead>
+          <tbody>
+            <tr><td>A</td><td>Ø35,000</td><td>+0,025/0</td><td data-m="35.012">—</td><td><i class="ok">OK</i></td></tr>
+            <tr><td>B</td><td>110,00</td><td>±0,02</td><td data-m="110.006">—</td><td><i class="ok">OK</i></td></tr>
+            <tr><td>C</td><td>80,00</td><td>±0,02</td><td data-m="79.994">—</td><td><i class="ok">OK</i></td></tr>
+            <tr><td>D</td><td>Ø6,00</td><td>±0,01</td><td data-m="6.004">—</td><td><i class="ok">OK</i></td></tr>
+            <tr><td>E</td><td>12,00</td><td>±0,01</td><td data-m="11.997">—</td><td><i class="ok">OK</i></td></tr>
+            <tr><td>Ra</td><td>0,8</td><td>máx.</td><td data-m="0.62" data-d="2">—</td><td><i class="ok">OK</i></td></tr>
+          </tbody>
+        </table>
+        <div class="report__foot mono">
+          <span>Inspetor: —</span><span>Temp. 20 °C</span><span>Instr. MIC-07 / RUG-02</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SETORES -->
+  <section class="sectors" aria-label="Setores atendidos">
+    <div class="sectors__track">
+      <span>Automotivo</span><i>/</i><span>Óleo e gás</span><i>/</i><span>Alimentício</span><i>/</i><span>Agrícola</span><i>/</i><span>Médico</span><i>/</i><span>Embalagens</span><i>/</i><span>Mineração</span><i>/</i><span>Plásticos</span><i>/</i>
+      <span>Automotivo</span><i>/</i><span>Óleo e gás</span><i>/</i><span>Alimentício</span><i>/</i><span>Agrícola</span><i>/</i><span>Médico</span><i>/</i><span>Embalagens</span><i>/</i><span>Mineração</span><i>/</i><span>Plásticos</span><i>/</i>
+    </div>
+  </section>
+
+  <!-- ORÇAMENTO -->
+  <section class="section" id="orcamento">
+    <div class="wrap quote">
+      <div class="quote__copy reveal">
+        <p class="eyebrow"><span class="mono">06</span> Orçamento</p>
+        <h2 class="sec-title sec-title--xl">Mande o desenho.<br><span class="accent-word">A gente devolve a peça.</span></h2>
+        <p class="sec-lead">Resposta técnica em até 24 h úteis, com prazo, preço e observações de fabricação.</p>
+        <dl class="contact mono">
+          <div><dt>Comercial</dt><dd><a href="mailto:contato@ergusinagem.com.br">contato@ergusinagem.com.br</a></dd></div>
+          <div><dt>WhatsApp</dt><dd><a href="#">(00) 00000-0000</a></dd></div>
+          <div><dt>Endereço</dt><dd>Rua —, 000 · Distrito Industrial</dd></div>
+        </dl>
+      </div>
+
+      <form class="form reveal" id="quoteForm" novalidate>
+        <div class="form__row">
+          <label class="field"><span>Nome</span><input type="text" name="nome" autocomplete="name" placeholder="Seu nome"></label>
+          <label class="field"><span>Empresa</span><input type="text" name="empresa" autocomplete="organization" placeholder="Razão social"></label>
+        </div>
+        <div class="form__row">
+          <label class="field"><span>E-mail</span><input type="email" name="email" autocomplete="email" placeholder="voce@empresa.com.br"></label>
+          <label class="field"><span>Quantidade</span><input type="text" name="qtd" inputmode="numeric" placeholder="ex.: 50 pç"></label>
+        </div>
+        <label class="drop" id="drop">
+          <input type="file" multiple accept=".step,.stp,.iges,.igs,.dwg,.dxf,.pdf" id="fileInput">
+          <span class="drop__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 16V4m0 0-4 4m4-4 4 4M4 16v3a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square"/></svg>
+          </span>
+          <span class="drop__t" id="dropText"><b>Arraste o desenho aqui</b> ou clique para selecionar</span>
+          <span class="drop__f mono">STEP · IGES · DWG · DXF · PDF — até 50 MB</span>
+        </label>
+        <label class="field"><span>Observações</span><textarea name="obs" rows="3" placeholder="Material, tratamento térmico, acabamento, prazo desejado…"></textarea></label>
+        <button type="submit" class="btn btn--block">Enviar para análise <span class="btn__arrow">→</span></button>
+        <p class="form__msg mono" id="formMsg" role="status"></p>
+      </form>
+    </div>
+  </section>
+</main>
+
+<!-- RODAPÉ em formato de carimbo de desenho técnico -->
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer__brand">
+      <img class="footer__logo logo-on-dark" src="assets/erg-logo.webp" alt="ERG Usinagem de Precisão — Tecnologia, Qualidade, Confiança" width="1280" height="606" loading="lazy" decoding="async"><img class="footer__logo logo-on-light" src="assets/erg-logo-grafite.webp" alt="" aria-hidden="true" width="1280" height="606" loading="lazy" decoding="async">
+    </div>
+    <div class="stamp mono">
+      <div class="stamp__cell stamp__cell--brand"><span>Empresa</span><b>ERG Usinagem de Precisão Ltda.</b></div>
+      <div class="stamp__cell"><span>CNPJ</span><b>00.000.000/0001-00</b></div>
+      <div class="stamp__cell"><span>Unidade</span><b>mm</b></div>
+      <div class="stamp__cell"><span>Escala</span><b>1:1</b></div>
+      <div class="stamp__cell"><span>Revisão</span><b>A</b></div>
+      <div class="stamp__cell"><span>Data</span><b id="year">2026</b></div>
+      <div class="stamp__cell stamp__cell--wide"><span>Navegação</span><b class="stamp__links"><a href="#capacidades">Capacidades</a><a href="#processo">Processo</a><a href="#materiais">Materiais</a><a href="#qualidade">Qualidade</a><a href="#orcamento">Orçamento</a></b></div>
+      <div class="stamp__cell"><span>Folha</span><b>01/01</b></div>
+    </div>
+    <p class="footer__legal">© <span id="year2">2026</span> ERG Usinagem de Precisão. Todos os direitos reservados.</p>
+  </div>
+</footer>
+
+<!-- Seletor de variante (apenas no protótipo) -->
+<div class="variant" role="group" aria-label="Variante do protótipo">
+  <span class="variant__lbl mono">Protótipo · variante</span>
+  <button type="button" data-set="escuro">Escura</button>
+  <button type="button" data-set="claro">Clara</button>
+</div>
+
+<script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
