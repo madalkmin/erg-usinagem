@@ -18,6 +18,19 @@
   btns.forEach(function (b) { b.addEventListener('click', function () { setVariant(b.dataset.set); }); });
   setVariant(root.getAttribute('data-theme') || 'escuro');
 
+  /* ---------- teste de tipografia (atual × nova) ---------- */
+  var tbtns = document.querySelectorAll('[data-type-set]');
+  function setType(t) {
+    root.setAttribute('data-type', t);
+    tbtns.forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.typeSet === t)); });
+    try { localStorage.setItem('erg-tipo', t); } catch (e) {}
+    var url = new URL(location.href);
+    url.searchParams.set('t', t);
+    history.replaceState(null, '', url);
+  }
+  tbtns.forEach(function (b) { b.addEventListener('click', function () { setType(b.dataset.typeSet); }); });
+  setType(root.getAttribute('data-type') || 'atual');
+
   /* ---------- relógio ---------- */
   var clock = document.getElementById('clock');
   function tick() { clock.textContent = new Date().toLocaleTimeString('pt-BR', { hour12: false }); }

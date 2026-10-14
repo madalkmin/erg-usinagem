@@ -1,0 +1,59 @@
+/* =========================================================
+   Teste de tipografia — html[data-type="nova"]
+   Títulos em Archivo larga (conversa com as letras largas da logo),
+   caixa alta só em rótulos pequenos, mono só em dados de medição.
+   ========================================================= */
+
+:root[data-type="nova"] {
+  --f-title: 'Archivo', 'Inter', system-ui, sans-serif;
+}
+
+/* títulos: caixa normal, largura expandida, espaçamento fechado */
+:root[data-type="nova"] h1,
+:root[data-type="nova"] h2,
+:root[data-type="nova"] h3 {
+  text-transform: none;
+  font-stretch: 125%;
+  font-weight: 700;
+  letter-spacing: -.025em;
+}
+
+:root[data-type="nova"] .hero__title { font-size: clamp(34px, 4.7vw, 70px); line-height: 1; letter-spacing: -.035em; }
+:root[data-type="nova"] .hero__title .line { padding-bottom: .1em; margin-bottom: -.1em; }
+:root[data-type="nova"] .sec-title { font-size: clamp(30px, 3.5vw, 52px); line-height: 1.04; font-stretch: 118%; }
+:root[data-type="nova"] .sec-title--xl { font-size: clamp(34px, 4.6vw, 68px); }
+:root[data-type="nova"] .cap__t,
+:root[data-type="nova"] .flow__step h3 { font-size: 21px; line-height: 1.15; font-stretch: 112%; font-weight: 650; letter-spacing: -.015em; }
+
+/* números grandes */
+:root[data-type="nova"] .specs__n { font-stretch: 125%; font-weight: 600; letter-spacing: -.04em; font-size: clamp(34px, 3.4vw, 50px); }
+:root[data-type="nova"] .specs__n small { font-family: var(--f-body); font-weight: 500; font-size: 14px; letter-spacing: 0; }
+:root[data-type="nova"] .scale__num { font-stretch: 125%; }
+:root[data-type="nova"] .scale__num .metal { font-weight: 600; letter-spacing: -.06em; font-size: clamp(120px, 15vw, 230px); }
+:root[data-type="nova"] .scale__num small { font-family: var(--f-body); font-weight: 500; font-size: clamp(22px, 2.4vw, 34px); }
+
+/* elementos menores em Archivo */
+:root[data-type="nova"] .mat b { text-transform: none; font-stretch: 112%; font-weight: 650; font-size: 16px; letter-spacing: -.01em; }
+:root[data-type="nova"] .report__head b { text-transform: none; font-stretch: 115%; font-weight: 650; font-size: 19px; letter-spacing: -.015em; }
+:root[data-type="nova"] .sectors__track span { font-stretch: 125%; font-weight: 800; letter-spacing: -.03em; text-transform: none; }
+
+/* botões e rótulos: caixa alta pequena com respiro */
+:root[data-type="nova"] .btn { font-family: var(--f-body); font-weight: 600; font-size: 14px; letter-spacing: .02em; text-transform: none; }
+:root[data-type="nova"] .btn--sm { font-size: 13px; }
+:root[data-type="nova"] .variant button { font-family: var(--f-body); font-weight: 600; font-size: 12px; letter-spacing: .02em; text-transform: none; }
+
+/* mono fica só em dados: tira de rótulos e textos corridos */
+:root[data-type="nova"] .flow__k,
+:root[data-type="nova"] .contact,
+:root[data-type="nova"] .qa__list .mono,
+:root[data-type="nova"] .cap__n,
+:root[data-type="nova"] .eyebrow .mono,
+:root[data-type="nova"] .drop__f { font-family: var(--f-body); font-feature-settings: "tnum" 1; }
+:root[data-type="nova"] .flow__k { font-size: 11px; font-weight: 600; letter-spacing: .14em; }
+:root[data-type="nova"] .cap__n,
+:root[data-type="nova"] .eyebrow .mono { font-weight: 600; }
+:root[data-type="nova"] .contact { font-size: 14px; }
+
+/* separador do seletor */
+.variant__sep { width: 1px; height: 18px; margin: 0 6px; background: var(--line-strong); }
+@media (max-width: 600px) { .variant__sep { margin: 0 2px; } }

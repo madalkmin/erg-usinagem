@@ -10,9 +10,10 @@
 <meta name="description" content="Usinagem CNC, ferramentaria e peças sob desenho para a indústria. Do protótipo à série, com inspeção dimensional em cada lote.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Archivo:wdth,wght@62..125,400..800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 <link rel="stylesheet" href="premium.css">
+<link rel="stylesheet" href="tipografia.css">
 <script>
   // aplica a variante antes do primeiro paint (evita flash)
   (function () {
@@ -20,6 +21,10 @@
     var v = p === 'claro' || p === 'escuro' ? p : null;
     try { v = v || localStorage.getItem('erg-variante'); } catch (e) {}
     if (v) document.documentElement.setAttribute('data-theme', v);
+    var q = new URLSearchParams(location.search).get('t');
+    var t = q === 'nova' || q === 'atual' ? q : null;
+    try { t = t || localStorage.getItem('erg-tipo'); } catch (e) {}
+    if (t) document.documentElement.setAttribute('data-type', t);
   })();
 </script>
 </head>
@@ -445,6 +450,10 @@
   <span class="variant__lbl mono">Protótipo · variante</span>
   <button type="button" data-set="escuro">Escura</button>
   <button type="button" data-set="claro">Clara</button>
+  <span class="variant__sep" aria-hidden="true"></span>
+  <span class="variant__lbl mono">Tipo</span>
+  <button type="button" data-type-set="atual">Atual</button>
+  <button type="button" data-type-set="nova">Nova</button>
 </div>
 
 <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
